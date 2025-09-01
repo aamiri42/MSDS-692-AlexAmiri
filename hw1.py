@@ -5,6 +5,8 @@ import streamlit as st
 
 from user_definition import *
 
+globals()["st"] = st
+
 
 def retrieve_data_from_urls(url_list: list) -> list:
     """
