@@ -33,11 +33,10 @@ def filter_by_company(data: pd.DataFrame, company_dictionary: dict) -> pd.DataFr
     create checkboxes and return a new dataframe
     which only includes data being checked.
     """
-    st.sidebar.write("Filter by Company")  # sidebar label stays
+    st.sidebar.write("Filter by Company")  
 
     selected = []
     for company, substring in company_dictionary.items():
-        # Use st.checkbox here so the test monkeypatch works
         if st.checkbox(company):
             selected.append(substring)
 
@@ -52,10 +51,10 @@ if __name__ == "__main__":
     st.title(f"{role_name} Job Listings")
 
     jobs = retrieve_data_from_urls(url_list)
-    df = pd.DataFrame(jobs)
+    df_datascience = pd.DataFrame(jobs)
 
-    if not df.empty:
-        df = df[["date", "title", "link"]]
+    if not df_datascience.empty:
+        df = df_datascience[["date", "title", "link"]]
 
     filtered_df = filter_by_company(df, company_dictionary)
 
