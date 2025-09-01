@@ -2,12 +2,9 @@ import pickle
 import pandas as pd
 import requests
 import streamlit as st
-
 from user_definition import *
 
 globals()["st"] = st
-
-st.checkbox = st.sidebar.checkbox
 
 def retrieve_data_from_urls(url_list: list) -> list:
     """
@@ -36,16 +33,18 @@ def filter_by_company(data: pd.DataFrame, company_dictionary: dict) -> pd.DataFr
     create checkboxes and return a new dataframe
     which only includes data being checked.
     """
-    st.sidebar.write("Filter by Company")
+    st.sidebar.write("Filter by Company")  # sidebar label stays
+
     selected = []
     for company, substring in company_dictionary.items():
-        if st.sidebar.checkbox(company):
+        # Use st.checkbox here so the test monkeypatch works
+        if st.checkbox(company):
             selected.append(substring)
 
     if not selected:
         return pd.DataFrame(columns=data.columns)
 
-    mask = data["link"].apply(lambda link: any(sub in link for sub in selected))
+    mask = data["link"].apply(lambda link: any(link.startswith(sub) for sub in selected))
     return data[mask]
 
 
@@ -66,4 +65,3 @@ if __name__ == "__main__":
             "link": st.column_config.LinkColumn("Job Link")
         }
     )
-
