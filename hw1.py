@@ -7,6 +7,7 @@ from user_definition import *
 
 globals()["st"] = st
 
+st.checkbox = st.sidebar.checkbox
 
 def retrieve_data_from_urls(url_list: list) -> list:
     """
