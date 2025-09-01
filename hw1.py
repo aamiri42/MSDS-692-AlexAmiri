@@ -19,9 +19,9 @@ def retrieve_data_from_urls(url_list: list) -> list:
 
     for url in url_list:
         response = requests.get(url)
-        jobs = pickle.loads(response.content)
+        jobs = pickle.loads(response.content) 
         for job in jobs:
-            key = (job["title"], job["link"])
+            key = (job["title"], job["link"], job["snippet"], job["date"])
             if key not in seen:
                 seen.add(key)
                 all_jobs.append(job)
@@ -65,3 +65,4 @@ if __name__ == "__main__":
             "link": st.column_config.LinkColumn("Job Link")
         }
     )
+
